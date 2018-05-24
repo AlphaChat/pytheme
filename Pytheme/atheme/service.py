@@ -7,7 +7,7 @@ from flask import (abort, current_app, flash, redirect, request, session,
 from .xmlrpc_client import create_xmlrpc_client
 
 
-def service_command(service, command, params):
+def service_command(service, command, params=""):
     """ run a command on an atheme service """
     client = create_xmlrpc_client(current_app)
 
@@ -18,8 +18,12 @@ def service_command(service, command, params):
     result = None
 
     try:
-        result = client.atheme.command(authcookie, account, ip,
-                                       service, command, params)
+        if params:
+            result = client.atheme.command(authcookie, account, ip,
+                                           service, command, params)
+        else:
+            result = client.atheme.command(authcookie, account, ip,
+                                           service, command)
     except Fault as error:
         if error.faultCode == 15:
             session.pop("authcookie", None)
@@ -33,17 +37,17 @@ def service_command(service, command, params):
     return result
 
 
-def nickserv_command(command, params):
+def nickserv_command(command, params=""):
     return service_command("nickserv", command, params)
 
 
-def chanserv_command(command, params):
+def chanserv_command(command, params=""):
     return service_command("chanserv", command, params)
 
 
-def memoserv_command(command, params):
+def memoserv_command(command, params=""):
     return service_command("memoserv", command, params)
 
 
-def operserv_command(command, params):
+def operserv_command(command, params=""):
     return service_command("operserv", command, params)
