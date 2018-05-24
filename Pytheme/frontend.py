@@ -1,3 +1,5 @@
+from functools import wraps
+
 from flask import (Blueprint, flash, redirect, render_template, request,
                    session, url_for)
 
@@ -7,13 +9,21 @@ from .atheme import nickserv
 frontend = Blueprint("frontend", __name__)
 
 
+def login_required(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        if "accountname" not in session or "authcookie" not in session:
+            flash("You must login to view this page", "info")
+            return redirect(url_for("frontend.login"))
+
+        return function(*args, **kwargs)
+
+    return wrapper
+
+
 @frontend.route("/")
+@login_required
 def index():
-
-    if "accountname" not in session or "authcookie" not in session:
-        flash("You must login first.", "warning")
-        return redirect(url_for("frontend.login"))
-
     return render_template("index.html")
 
 
@@ -58,8 +68,9 @@ def logout():
 
 
 @frontend.route("/nickserv")
+@login_required
 def service_nickserv():
 
-    info = nickserv.info("cruzr")
+    info = nickserv.info(session["accountname"])
 
     return render_template("nickserv.html", info=info)
