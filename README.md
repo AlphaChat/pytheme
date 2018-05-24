@@ -2,6 +2,12 @@
 
 Flask frontend to Atheme's XMLRPC interface.
 
+## Requirements
+
+- Python 3.6.5 or higher
+- Flask
+- A suitable httpd
+
 ## Setup
 
 1. Copy `config.example.py` to `config.py`, and set the `SECRET_KEY` and `ATHEME_XMLRPC_ENDPOINT` settings appropriately.
@@ -23,3 +29,5 @@ Flask frontend to Atheme's XMLRPC interface.
 ## Warnings ⚠️
 - Please do NOT run Atheme's XMLRPC on a public interface. Use SSH tunneling, a VPN, or run Pytheme on the same machine as Atheme and connect them via localhost.
 - Please do NOT have Pytheme run on HTTP/S ports. Put it behind NGiNX and possibly uWSGI when running in production.
+
+Failure to do so can and will likely lead to a leak of your users account passwords.
