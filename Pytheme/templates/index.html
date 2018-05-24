@@ -1,5 +1,41 @@
+{% extends "base.html" %}
 {% block content %}
 
 <h1>Hello, <strong>{{ session["accountname"] }}</strong></h1>
+
+{% for section in sections %}
+
+<h2>{{ section.header }}</h2>
+
+{% if section.labels %}
+    {% for label, value in section.labels.items() %}
+    <strong>{{ label }}</strong>: {{ value }}
+    <br>
+    {% endfor %}
+{% endif %}
+
+    {% if section.table_data %}
+        <table class="table">
+            {% if section.table_headers %}
+            <thead>
+                <tr>
+                    {% for header in section.table_headers %}
+                    <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            {% endif %}
+            <tbody>
+                {% for row in section.table_data %}
+                <tr>
+                    {% for data in row %}
+                    <td>{{ data }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endfor %}
 
 {% endblock %}
