@@ -4,9 +4,13 @@ from flask import (Blueprint, flash, redirect, render_template, request,
                    session, url_for)
 
 from . import atheme
-from .atheme import nickserv
+from .atheme import memoserv, nickserv
 
 frontend = Blueprint("frontend", __name__)
+
+
+class PageSection:
+    pass
 
 
 def login_required(function):
@@ -24,7 +28,26 @@ def login_required(function):
 @frontend.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+
+    page_data = []
+
+    # memos
+    memo_section = PageSection()
+    memos = memoserv.list_memos(new_only=True)
+
+    memo_section.header = "Memos"
+    if len(memos):
+        memo_section.labels = {"New Memos":
+                               f"You have {len(memos)} new memo(s)."}
+        memo_section.table_headers = ["ID", "From", "Sent"]
+        memo_section.table_data = memos
+
+    else:
+        memo_section.lables = {"No new memos": "No unread memos to show"}
+
+    page_data.append(memo_section)
+
+    return render_template("index.html", sections=page_data)
 
 
 @frontend.route("/login", methods=["GET", "POST"])
@@ -70,7 +93,6 @@ def logout():
 @frontend.route("/nickserv")
 @login_required
 def service_nickserv():
-
     info = nickserv.info(session["accountname"])
 
     return render_template("nickserv.html", info=info)
