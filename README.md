@@ -20,6 +20,6 @@ Flask frontend to Atheme's XMLRPC interface.
 6. Start Flask: `flask run`
 
 
-## Warnings
+## Warnings ⚠️
 - Please do NOT run Atheme's XMLRPC on a public interface. Use SSH tunneling, a VPN, or run Pytheme on the same machine as Atheme and connect them via localhost.
-- Please do NOT have Pythem run on HTTP/S ports. Put it behind NGiNX and possibly uWSGI when running in production.
+- Please do NOT have Pytheme run on HTTP/S ports. Put it behind NGiNX and possibly uWSGI when running in production.
