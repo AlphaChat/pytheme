@@ -1,0 +1,19 @@
+.container.main-container {
+  margin-top: 1.5em;
+}
+.card.login {
+  background-color: rgba(190, 232, 252, 0.22);
+}
+.card-header.login {
+  background-color: rgba(166, 200, 216, 0.5);
+  font-size: 1.2em;
+}
+.card-content.login {
+  padding: 1.2em
+}
+.btn-login-container {
+  margin-top: 1.8em;
+}
+.btn.login {
+  width: 150px;
+}

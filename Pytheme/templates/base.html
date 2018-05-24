@@ -2,17 +2,24 @@
 
 <html>
     <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/default_style.css') }}">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         {% block head %}
 
         <title>{% block title %}Pytheme{% endblock title %}</title>
 
-        {% with messages = get_flashed_messages(with_categories=True) %}
+        <!-- hiding these temporarily, display specific errors on child template(s) instead -->
 
-            {% for cat, msg in messages %}
-            <p class="{{ cat }}">{{ msg }}</li>
-            {% endfor %}
+        {#% with messages = get_flashed_messages(with_categories=True) %#}
 
-        {% endwith %}
+            {#% for cat, msg in messages %#}
+            <!--<p class="{{ cat }}">{{ msg }}</li>-->
+            {#% endfor %#}
+
+        {#% endwith %#}
 
         <style>
             {% block style %}
@@ -24,11 +31,15 @@
 
     <body>
         {% block body %}
-        <div class="container">
+        <nav class="navbar navbar-expand-lg bg-primary">
+          <a class="navbar-brand text-white" href="#">PyTheme</a>
+        </nav>
+        <div class="container main-container">
             {% block content %}
 
             {% endblock content %}
         </div>
         {% endblock body %}
+       
     </body>
 </html>

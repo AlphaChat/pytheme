@@ -7,7 +7,79 @@
 
 {% block content %}
 
-    <h1>Login to your Atheme account.</h1>
+  <script>
+    $(document).ready(function() {
+      var loginBtn = $("#loginBtn");
+      var form = $("#loginForm");
+      var login = $("#account");
+      var pass = $("#password");
+
+      // set the initial state of the button to disabled
+      // once the user enters something, enable it
+      disableButton();
+
+      function disableButton() {
+        loginBtn.attr('disabled', '')
+          .attr('aria-disabled', true);
+      }
+      function enableButton() {
+        loginBtn.removeAttr('disabled')
+          .removeAttr('aria-disabled');
+      }
+
+      function checkFieldLength() {
+        if (!(login.val().length > 0 && pass.val().length > 0)) {
+          disableButton()
+        } else {
+          enableButton();
+        }
+      }
+
+      login.on('input', checkFieldLength);
+      pass.on('input', checkFieldLength);
+
+      loginBtn.on('click', function() {
+        disableButton();
+
+        // Disabling the button interferes with regular form submission
+        // so submit the form within the click event handler
+        form.submit();
+      });
+    });
+  </script>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="card login">
+        <div class="card-header login">
+          Login to your Atheme account
+        </div>
+        <div class="card-content login">
+          <form method="post" id="loginForm">
+            <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="account" name="accountname" placeholder="Username">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="btn-login-container">
+              <button id="loginBtn" class="btn btn-primary login">Log In</button>
+            </div>
+          </form>
+          {% with messages = get_flashed_messages() %}
+            {% for msg in messages %}
+              <div class="alert alert-danger">
+                {{ msg }}
+              </div>
+            {% endfor %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--<h1>Login to your Atheme account.</h1>
 
     <form method="POST">
         <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
@@ -18,6 +90,6 @@
         <input type="password" id="password" name="password">
         <br>
         <input type="submit">
-    </form>
+    </form>-->
 
 {% endblock content %}
