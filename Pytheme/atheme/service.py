@@ -1,7 +1,8 @@
 
 from xmlrpc.client import Fault
 
-from flask import current_app, flash, request, session
+from flask import (abort, current_app, flash, redirect, request, session,
+                   url_for)
 
 from .xmlrpc_client import create_xmlrpc_client
 
@@ -20,6 +21,13 @@ def service_command(service, command, params):
         result = client.atheme.command(authcookie, account, ip,
                                        service, command, params)
     except Fault as error:
+        if error.faultCode == 15:
+            session.pop("authcookie", None)
+            session.pop("accountname", None)
+            # invalid authcookie, time to get a new one, but we have to
+            # redirect from the view controller
+            abort(redirect(url_for("frontend.login")))
+
         flash(f"Command Error {error.faultCode}: {error.faultString}")
 
     return result
