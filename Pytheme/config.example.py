@@ -10,12 +10,12 @@ class DefaultConfig(object):
     ATHEME_XMLRPC_ENDPOINT = "http://172.32.1.2:8080/xmlrpc"
 
 
-class ProductionConfig(object):
+class ProductionConfig(DefaultConfig):
 
     pass
 
 
-class DevelopmentConfig(object):
+class DevelopmentConfig(ProductionConfig):
 
     DEBUG = True
     TESTING = True
