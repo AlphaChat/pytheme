@@ -1,0 +1,23 @@
+
+{# login form #}
+
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} - Login{% endblock title %}
+
+{% block content %}
+
+    <h1>Login to your Atheme account.</h1>
+
+    <form method="POST">
+        <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+        <label for="account">Atheme Account Name</label>
+        <input type="text" id="account" name="accountname">
+        <br>
+        <label for="password">Atheme Account Password</label>
+        <input type="password" id="password" name="password">
+        <br>
+        <input type="submit">
+    </form>
+
+{% endblock content %}
