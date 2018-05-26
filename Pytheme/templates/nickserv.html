@@ -4,11 +4,71 @@
 
 
 {% block content %}
-<h1>NickServ</h1>
+<h1 style="margin-bottom: 1.1em;">NickServ</h1>
 
-<h2>Account Info</h2>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header nickserv">
+        Account info for {{ session["accountname"] }}
+      </div>
+      <div class="card-body nickserv">
+        <div class="nickserv-container">
+          <div class="nickserv-label">Entity ID</div>
+          <div class="nickserv-value">{{ info.entity_id }}</div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Registration Date</div>
+          <div class="nickserv-value">
+            {{ info.registered_on }}
+          </div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Last Seen</div>
+          <div class="nickserv-value">
+            {{ info.last_seen }}
+          </div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Nicks</div>
+          <div class="nickserv-value">{{ info.nicks }}</div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Email</div>
+          <div class="nickserv-value">{{ info.email }}</div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Flags</div>
+          <div class="nickserv-value">{{ info.flags }}</div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Channels</div>
+          <div class="nickserv-value">{{ info.channels }}</div>
+        </div>
+        <div class="nickserv-container">
+          <div class="nickserv-label">Groups</div>
+          <div class="nickserv-value">{{ info.groups }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<pre>{{ info }}</pre>
+
+<!-- <h2>Account Info</h2>
+
+Registered On: {{ info.registered_on }}<br />
+Registered Since: {{ info.registered_since }}<br />
+Entity ID: {{ info.entity_id }}<br />
+Last Seen: {{ info.last_seen }}<br />
+Last Seen Since: {{ info.last_seen_since }}<br />
+Nicks: {{ info.nicks }}<br />
+Email: {{ info.email }}<br />
+Flags: {{ info.flags }}<br />
+Channels: {{ info.channels }}<br />
+Groups: {{ info.groups }}<br /> -->
+
+
 
 
 {% endblock %}
